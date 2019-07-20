@@ -4,3 +4,9 @@ spring:
     url: jdbc:mysql://localhost:3306/mp?useUnicode=true&characterEncoding=utf8&useSSL=false
     username: root
     password: feng_sha
+logging:
+  level:
+    root: warn
+    com.mp.dao: trace
+  pattern:
+    console: '%p%m%n'

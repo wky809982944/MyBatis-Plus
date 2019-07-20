@@ -1,11 +1,13 @@
 package com.mp.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 @Data
 public class User {
     //    主键
+    @TableId
     private Long id;
     //    姓名
     private String name;
@@ -17,4 +19,6 @@ public class User {
     private Long managerId;
 //    创建时间
     private LocalDateTime createTime;
+
+
 }
