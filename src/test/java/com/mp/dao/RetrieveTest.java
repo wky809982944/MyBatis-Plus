@@ -107,4 +107,34 @@ public class RetrieveTest {
         list.forEach(System.out::println);
 
     }
+
+    /**
+     * 5.名字威王姓并且（年龄<40或邮箱不为空）
+     * name like'王%' and (age < 40 or email is not null)
+    */
+    @Test
+    public void testSelectByWrapper5(){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.likeRight("name", "王")
+                    .and(wq -> wq.lt("age", 40).or().isNotNull("email"));
+        List<User> list = userMapper.selectList(queryWrapper);
+        list.forEach(System.out::println);
+
+    }
+
+    /**
+     * 6.名字为王姓或者（年龄小于40并且年龄大于20并且邮箱不为空）
+     * name like '王%' or (age<40 and age > 20) and email is not null
+     */
+    @Test
+    public void testSelectByWrapper6(){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.likeRight("name", "王")
+                    .or(wq -> wq.lt("age", 40)
+                                .gt("age", 20)
+                                .isNotNull("email"));
+        List<User> list = userMapper.selectList(queryWrapper);
+        list.forEach(System.out::println);
+
+    }
 }
