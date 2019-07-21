@@ -1,7 +1,9 @@
 package com.mp.dao;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.additional.query.impl.LambdaQueryChainWrapper;
 import com.mp.entity.User;
 import org.junit.Test;
@@ -379,5 +381,41 @@ public class RetrieveTest {
         List<User> list = userMapper.selectAll(lambdaQuery);
         list.forEach(System.out::println);
 
+    }
+    /**
+     * 1.名字中包含雨并且年龄小于40
+     * name like '%雨%' and age<40
+     */
+    @Test
+    public void testSelectPage(){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.ge("age", 26);
+//        Page<User> page = new Page<>(1, 2);
+//        不要总记录数
+        Page<User> page = new Page<>(1, 2,false);
+        /*IPage<User> iPage  = userMapper.selectPage(page, queryWrapper);
+        System.out.println("总页数" + iPage.getPages());
+        System.out.println("总记录数"+iPage.getTotal());
+        List<User> userList  = iPage.getRecords();*/
+        IPage<Map<String, Object>> iPage = userMapper.selectMapsPage(page, queryWrapper);
+        System.out.println("总页数" + iPage.getPages());
+        System.out.println("总记录数"+iPage.getTotal());
+        List<Map<String, Object>> userList  = iPage.getRecords();
+        userList.forEach(System.out::println);
+    }
+
+    /**
+     * 可以多表链接分页
+     */
+    @Test
+    public void testSelectMyPage(){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.ge("age", 26);
+        Page<User> page = new Page<>(1, 2);
+        IPage<User> iPage  = userMapper.selectUserPage(page, queryWrapper);
+        System.out.println("总页数" + iPage.getPages());
+        System.out.println("总记录数"+iPage.getTotal());
+        List<User> userList  = iPage.getRecords();
+        userList.forEach(System.out::println);
     }
 }
