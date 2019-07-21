@@ -222,4 +222,17 @@ public class RetrieveTest {
         list.forEach(System.out::println);
 
     }
+
+    @Test
+    public void testSelectByWrapperAllEq(){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        Map<String, Object> params = new HashMap<>();
+        params.put("name", "王天风");
+        params.put("age", null);
+//        queryWrapper.allEq(params,false);
+        queryWrapper.allEq((k, v) -> !k.equals("name"), params);
+        List<User> list = userMapper.selectList(queryWrapper);
+        list.forEach(System.out::println);
+
+    }
 }
