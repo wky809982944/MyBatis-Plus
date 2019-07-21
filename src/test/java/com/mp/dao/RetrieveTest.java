@@ -235,4 +235,84 @@ public class RetrieveTest {
         list.forEach(System.out::println);
 
     }
+
+    /**
+     * 实体类字段太多
+     *
+     */
+    @Test
+    public void testSelectByWrapperMaps(){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("id","name")
+                    .like("name", "雨")
+                    .lt("age", 40);
+        List<Map<String,Object>> list = userMapper.selectMaps(queryWrapper);
+        list.forEach(System.out::println);
+
+    }
+
+    /**
+     * 11.按照直属上级分组，查询每组的平均年龄、最大年龄、最小年龄
+     * 并且只取年龄总和小于500的组
+     * select avg(age) avg_age, min(age) min_age, max(age) max_age
+     * from user
+     * group by manager_id
+     * having sum(age) <500
+     */
+    @Test
+    public void testSelectByWrapperMaps2(){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select(" avg(age) avg_age", "min(age) min_age", "max(age) max_age")
+                    .groupBy("manager_id")
+                    .having("sum(age)<{0}", 500);
+
+        List<Map<String,Object>> list = userMapper.selectMaps(queryWrapper);
+        list.forEach(System.out::println);
+
+    }
+
+    /**
+     * 只返回一列
+     *
+     */
+    @Test
+    public void testSelectByWrapperObjs(){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("id","name")
+                    .like("name", "雨")
+                    .lt("age", 40);
+        List<Object> list = userMapper.selectObjs(queryWrapper);
+        list.forEach(System.out::println);
+
+    }
+
+    /**
+     * 返回总记录数
+     *
+     */
+    @Test
+    public void testSelectByWrapperCount(){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("id","name")
+                    .like("name", "雨")
+                    .lt("age", 40);
+        Integer count = userMapper.selectCount(queryWrapper);
+        System.out.println("count = " + count);
+
+    }
+
+    /**
+     * 返回总记录数，只有一条
+     *
+     */
+    @Test
+    public void testSelectByWrapperOne(){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("id","name")
+                    .like("name", "雨")
+                    .lt("age", 40);
+        User user = userMapper.selectOne(queryWrapper);
+        System.out.println("user = " + user);
+
+    }
 }
