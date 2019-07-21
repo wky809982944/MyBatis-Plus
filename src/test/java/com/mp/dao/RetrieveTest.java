@@ -1,6 +1,8 @@
 package com.mp.dao;
-
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.service.additional.query.impl.LambdaQueryChainWrapper;
 import com.mp.entity.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -109,7 +111,7 @@ public class RetrieveTest {
     }
 
     /**
-     * 5.名字威王姓并且（年龄<40或邮箱不为空）
+     * 5.名字为王姓并且（年龄<40或邮箱不为空）
      * name like'王%' and (age < 40 or email is not null)
     */
     @Test
@@ -313,6 +315,54 @@ public class RetrieveTest {
                     .lt("age", 40);
         User user = userMapper.selectOne(queryWrapper);
         System.out.println("user = " + user);
+
+    }
+
+    /**
+     * 返回总记录数，只有一条
+     *
+     */
+    @Test
+    public void testSelectLambda(){
+/*        LambdaQueryWrapper<User> lambda = new QueryWrapper<User>().lambda();
+        LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();*/
+        LambdaQueryWrapper<User> lambdaQuery = Wrappers.<User>lambdaQuery();
+//        防止误写，编译时检查
+        lambdaQuery.like(User::getName, "雨")
+                    .lt(User::getAge, 40);
+//        where name like '%雨%'
+        List<User> userList = userMapper.selectList(lambdaQuery);
+        userList.forEach(System.out::println);
+
+    }
+
+    /**
+     * 5.名字为王姓并且（年龄<40或邮箱不为空）
+     * name like'王%' and (age < 40 or email is not null)
+     */
+    @Test
+    public void testSelectLambda2(){
+        LambdaQueryWrapper<User> lambdaQuery = new LambdaQueryWrapper<>();
+        lambdaQuery.likeRight(User::getName, "王")
+                   .and(lqw -> lqw.lt(User::getAge, 40)
+                                  .or()
+                                  .isNotNull(User::getEmail));
+        List<User> list = userMapper.selectList(lambdaQuery);
+        list.forEach(System.out::println);
+
+    }
+
+    /**
+     * 5.名字为王姓并且（年龄<40或邮箱不为空）
+     * name like'王%' and (age < 40 or email is not null)
+     */
+    @Test
+    public void testSelectLambda3(){
+        List<User> list = new LambdaQueryChainWrapper<User>(userMapper)
+                .like(User::getName, "雨")
+                .ge(User::getName, "雨")
+                .list();
+        list.forEach(System.out::println);
 
     }
 }
