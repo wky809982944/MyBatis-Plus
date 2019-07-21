@@ -19,8 +19,8 @@ public class ARTest {
     @Test
     public void testInsert(){
         User user = new User();
-        user.setName("张草");
-        user.setAge(24);
+        user.setName("钱明");
+        user.setAge(26);
         user.setEmail("xn@baomidou.com");
         user.setManagerId(1088248166370832385L);
         user.setCreateTime(LocalDateTime.now());
@@ -37,14 +37,14 @@ public class ARTest {
     @Test
     public void testSelectById2(){
         User user = new User();
-        user.setId(1152911029672353793L);
+//        user.setId(1152911029672353793L);
         User userSelect = user.selectById();
         System.out.println("userSelect = " + userSelect);
     }
     @Test
     public void testUpdateById(){
         User user = new User();
-        user.setId(1152911029672353793L);
+//        user.setId(1152911029672353793L);
         user.setName("张草草");
         boolean updateById = user.updateById();
         System.out.println("updateById = " + updateById);
@@ -53,7 +53,7 @@ public class ARTest {
     @Test
     public void testDeleteById(){
         User user = new User();
-        user.setId(1152911029672353793L);
+//        user.setId(1152911029672353793L);
         user.setName("张草草");
         boolean b = user.deleteById();
         System.out.println("b = " + b);

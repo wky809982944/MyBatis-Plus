@@ -1,6 +1,5 @@
 package com.mp.entity;
 
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,8 +10,8 @@ import java.time.LocalDateTime;
 public class User extends Model<User> {
     private static final long serialVersionUID = 1L;
     //    主键
-    @TableId
-    private Long id;
+//    @TableId(type = IdType.ID_WORKER_STR)
+    private String id;
     //    姓名
     private String name;
     //    年龄

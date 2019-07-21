@@ -12,4 +12,7 @@ logging:
     console: '%p%m%n'
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**Mapper.xml
+  global-config:
+    db-config:
+      id-type: uuid
 

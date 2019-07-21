@@ -19,7 +19,7 @@ public class UpdateTest {
     @Test
     public void testUpdateById(){
         User user = new User();
-        user.setId(1088248166370832385L);
+//        user.setId(1088248166370832385L);
         user.setAge(26);
         user.setEmail("wtf2@baomidou.com");
         int rows = userMapper.updateById(user);
