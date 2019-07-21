@@ -2,7 +2,6 @@ package com.mp.dao;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mp.entity.User;
-import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -196,16 +195,29 @@ public class RetrieveTest {
 
     }
 
+    /*
+     * 1.名字中包含雨并且年龄小于40
+     * name like '%雨%' and age<40
+     */
+   /* @Test
+    public void testSelectByWrapperSupper2(String name,String email){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like(StringUtils.isNotBlank(name), "name", name)
+                    .like(StringUtils.isNotBlank(email), "email", email);
+        List<User> list = userMapper.selectList(queryWrapper);
+        list.forEach(System.out::println);
+
+    }*/
     /**
      * 1.名字中包含雨并且年龄小于40
      * name like '%雨%' and age<40
      */
     @Test
-    public void testSelectByWrapperSupper2(String name,String email){
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-//        QueryWrapper<User> query = Wrappers.<User>query();
-        queryWrapper.like(StringUtils.isNotBlank(name), "name", name)
-                    .like(StringUtils.isNotBlank(email), "email", email);
+    public void testSelectByWrapperEntity(){
+        User whereUser = new User();
+        whereUser.setName("刘红雨");
+        whereUser.setAge(32);
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>(whereUser);
         List<User> list = userMapper.selectList(queryWrapper);
         list.forEach(System.out::println);
 
