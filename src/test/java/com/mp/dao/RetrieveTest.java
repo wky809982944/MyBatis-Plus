@@ -365,4 +365,19 @@ public class RetrieveTest {
         list.forEach(System.out::println);
 
     }
+    /**
+     * 5.名字为王姓并且（年龄<40或邮箱不为空）
+     * name like'王%' and (age < 40 or email is not null)
+     */
+    @Test
+    public void testSelectMy(){
+        LambdaQueryWrapper<User> lambdaQuery = new LambdaQueryWrapper<>();
+        lambdaQuery.likeRight(User::getName, "王")
+                   .and(lqw -> lqw.lt(User::getAge, 40)
+                                  .or()
+                                  .isNotNull(User::getEmail));
+        List<User> list = userMapper.selectAll(lambdaQuery);
+        list.forEach(System.out::println);
+
+    }
 }
