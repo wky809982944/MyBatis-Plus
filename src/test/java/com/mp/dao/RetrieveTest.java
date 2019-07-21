@@ -2,6 +2,7 @@ package com.mp.dao;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mp.entity.User;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -200,13 +201,11 @@ public class RetrieveTest {
      * name like '%雨%' and age<40
      */
     @Test
-    public void testSelectByWrapperSupper2(){
+    public void testSelectByWrapperSupper2(String name,String email){
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
 //        QueryWrapper<User> query = Wrappers.<User>query();
-        queryWrapper.select(User.class,info->!info.getColumn().equals("create_time")&&
-                                             !info.getColumn().equals("manager_id"))
-                    .like("name", "雨")
-                    .lt("age", 40);
+        queryWrapper.like(StringUtils.isNotBlank(name), "name", name)
+                    .like(StringUtils.isNotBlank(email), "email", email);
         List<User> list = userMapper.selectList(queryWrapper);
         list.forEach(System.out::println);
 
