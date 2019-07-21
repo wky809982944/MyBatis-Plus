@@ -178,4 +178,37 @@ public class RetrieveTest {
         list.forEach(System.out::println);
 
     }
+
+    /**
+     * 1.名字中包含雨并且年龄小于40
+     * name like '%雨%' and age<40
+     */
+    @Test
+    public void testSelectByWrapperSupper(){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+//        QueryWrapper<User> query = Wrappers.<User>query();
+        queryWrapper.select("id","name")
+                    .like("name", "雨")
+                    .lt("age", 40);
+        List<User> list = userMapper.selectList(queryWrapper);
+        list.forEach(System.out::println);
+
+    }
+
+    /**
+     * 1.名字中包含雨并且年龄小于40
+     * name like '%雨%' and age<40
+     */
+    @Test
+    public void testSelectByWrapperSupper2(){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+//        QueryWrapper<User> query = Wrappers.<User>query();
+        queryWrapper.select(User.class,info->!info.getColumn().equals("create_time")&&
+                                             !info.getColumn().equals("manager_id"))
+                    .like("name", "雨")
+                    .lt("age", 40);
+        List<User> list = userMapper.selectList(queryWrapper);
+        list.forEach(System.out::println);
+
+    }
 }
