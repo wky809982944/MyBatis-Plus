@@ -137,4 +137,45 @@ public class RetrieveTest {
         list.forEach(System.out::println);
 
     }
+    /**
+     * 7.（年龄小于40或邮箱不为空）并且名字为王姓
+     * (age < 40 or email is not null ) and name like '王%'
+     */
+    @Test
+    public void testSelectByWrapper7(){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.nested(wq -> wq.lt("age", 40)
+                                    .or()
+                                    .isNotNull("email"))
+                    .likeRight("name", "王");
+        List<User> list = userMapper.selectList(queryWrapper);
+        list.forEach(System.out::println);
+
+    }
+
+    /**
+     * 8.年龄威30、31、34、 35
+     * age in (30、 31 、 34 、 35)
+     */
+    @Test
+    public void testSelectByWrapper8(){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.in("age", Arrays.asList(30, 31, 34, 35));
+        List<User> list = userMapper.selectList(queryWrapper);
+        list.forEach(System.out::println);
+
+    }
+
+    /**
+     * 9 只返回满足条件的其中一条语句即可
+     * limit 1
+     */
+    @Test
+    public void testSelectByWrapper9(){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.in("age", Arrays.asList(30, 31, 34, 35)).last("limit 1");
+        List<User> list = userMapper.selectList(queryWrapper);
+        list.forEach(System.out::println);
+
+    }
 }
