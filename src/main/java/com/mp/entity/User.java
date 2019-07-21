@@ -11,6 +11,7 @@ public class User extends Model<User> {
     private static final long serialVersionUID = 1L;
     //    主键
 //    @TableId(type = IdType.ID_WORKER_STR)
+//    @TableField(strategy = FieldStrategy.NOT_EMPTY)局部策略
     private String id;
     //    姓名
     private String name;

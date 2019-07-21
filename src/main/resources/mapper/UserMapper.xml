@@ -5,10 +5,10 @@
 <mapper namespace="com.mp.dao.UserMapper">
     <select id="selectAll" resultType="com.mp.entity.User">
         select *
-        from mp.user ${ew.customSqlSegment}
+        from mp.mp_user ${ew.customSqlSegment}
     </select>
     <select id="selectUserPage" resultType="com.mp.entity.User">
         select *
-        from mp.user ${ew.customSqlSegment}
+        from mp.mp_user ${ew.customSqlSegment}
     </select>
 </mapper>

@@ -15,4 +15,7 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: uuid
+      table-prefix: mp_
+#  config-location: classpath:mybatis-config.xml
+#  type-aliases-package: com.mp.entity
 

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- .DTD文件是xml格式文件的约束文件，它约束了该xml文件使用的标签以及标签之间的关系 -->
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- 根标签 配置 -->
+<configuration>
+
+</configuration>
